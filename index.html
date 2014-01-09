@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="github">
+	<head>
+		<title>kayiwa.github.io</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="assets/reset.css">
+		<link rel="stylesheet" type="text/css" href="assets/grid.css">
+		<link rel="stylesheet" type="text/css" href="assets/style.css">
+	</head>
+	<body data-username="kayiwa" data-additional="feedhq/feedhq" ng-controller="GithubController" ng-cloak>
+		<div id="wrapper" class="grid clearfix">
+			<div id="main" class="grid-1">
+				<h1>
+					<p><gh-img src="user.avatar_url"></p>
+					{{ user.name }}
+				</h1>
+				<p ng-show="user.company">{{ user.company }}</p>
+				<p ng-show="user.location">{{ user.location }}</p>
+				<p ng-show="user.blog"><a href="{{ user.blog }}">{{ user.blog }}</a></p>
+				<p><br><br>Dashboard design by <a href="http://twitter.github.io">@twitter</a>.</p>
+			</div>
+
+			<div class="grid grid-3">
+				<div id="statistics" class="grid-1 alpha header">
+					<h1>Statistics</h1>
+					<p ng-show="user">
+						<a href="https://github.com/{{ user.login }}?tab=repositories"><span id="num-repos">{{ user.public_repos }}</span> public repos</a>
+						<br>
+						<a ng-show="source_repos" href="https://github.com/{{ user.login }}?tab=repositories"><span id="num-source-repos">{{ source_repos }}</span> source repos</a>
+						<br>
+						<strong>{{ user.created_at | ago }}</strong> of GitHub age
+					</p>
+				</div>
+
+				<div id="recently-updated" class="grid-2 omega header">
+					<h1>Recently updated <a href="https://github.com/{{ user.login }}/repositories">View All on GitHub</a></h1>
+					<ol id="recently-updated-repos" ng-repeat="repo in recent">
+						<li>
+							<span class="name"><a href="{{ repo.html_url }}">{{ repo.name }}</a></span>
+							<span class="time"><a href="{{ repo.html_url }}/commits">{{ repo.pushed_at | date }}</a></span>
+							<span class="bullet">⋅</span>
+							<span class="watchers"><a href="{{ repo.html_url }}/stargazers">{{ repo.stargazers_count }} stargazers</a></span>
+							<span class="bullet">⋅</span>
+							<span class="forks"><a href="{{ repo.html_url }}/network">{{ repo.forks_count }} forks</a></span>
+						</li>
+					</ol>
+				</div>
+			</div>
+
+			<ol id="repos" ng-repeat="repo in repos">
+				<li class="repo grid-1 {{ repo.language.toLowerCase() }}">
+					<a href="{{ repo.html_url }}">
+						<h2>{{ repo.name }}</h2>
+						<h3>{{ repo.language }}</h3>
+						<p>{{ repo.description }}</p>
+					</a>
+				</li>
+			</ol>
+		</div>
+		<script type="text/javascript" src="assets/angular.min.js"></script>
+		<script type="text/javascript" src="assets/moment.min.js"></script>
+		<script type="text/javascript" src="assets/underscore.min.js"></script>
+		<script type="text/javascript" src="assets/github.js"></script>
+	</body>
+</html>
